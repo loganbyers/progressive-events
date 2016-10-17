@@ -1,7 +1,7 @@
 from django.contrib.gis import forms
 from django.contrib.gis.forms import PointField
 from django.utils.html import mark_safe
-from .models import Event, Venue, Organization
+from .models import Event, Venue, Organization, CzarApplication
 
 
 # super hacky womp womp
@@ -71,4 +71,26 @@ class EventForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'rows': 3}),
             'start': forms.TimeInput(attrs={'type': 'time'}),
             'end': forms.TimeInput(attrs={'type': 'time'})
+        }
+
+
+class CzarApplicationForm(forms.ModelForm):
+
+    class Meta:
+        model = CzarApplication
+        exclude = ['application_reviewed', 'czar_granted']
+        labels = {
+            'name_first': 'First Name',
+            'name_last': 'Last Name',
+            'municipality': 'Location',
+            'description': 'About You',
+            'twitter': 'Twitter',
+            'url': 'URL'
+        }
+        widgets = {
+            'description': forms.Textarea(attrs={'rows': 3,
+                            'placeholder': 'Why you are a good fit for this role'}),
+            'municipality': forms.TextInput(attrs={'placeholder': 'Municipality/City/Region'}),
+            'twitter': forms.TextInput(attrs={'placeholder': 'Twitter (optional)'}),
+            'url': forms.TextInput(attrs={'placeholder': 'URL (optional)'})
         }

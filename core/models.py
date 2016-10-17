@@ -100,6 +100,27 @@ class EventQueryset(models.query.GeoQuerySet):
             return self.filter(pk__in=map(lambda e: e.pk, events))
 
 
+class CzarApplication(models.Model):
+    name_first = models.CharField(max_length=50, blank=False)
+    name_last = models.CharField(max_length=50, blank=False)
+    email = models.EmailField(blank=False)
+    municipality = models.CharField(max_length=255, blank=True)
+    url = models.URLField(blank=True)
+    twitter = models.CharField(max_length=50, blank=True)
+    description = models.TextField(max_length=2500, blank=False, default='')
+    application_reviewed = models.BooleanField(blank=False, default=False)
+    czar_granted = models.NullBooleanField(blank=True)
+
+    def save(self, *args, **kwargs):
+        return super(CzarApplication, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return ' '.join([self.name_first, self.name_last, self.email])
+
+    def __unicode__(self):
+        return ' '.join([self.name_first, self.name_last, self.email])
+
+
 class Event(models.Model):
     EVENT_TYPE_CHOICES = (
             ('party-event', 'Party Event'),
@@ -122,6 +143,7 @@ class Event(models.Model):
     event_type = models.CharField(max_length=255, choices=EVENT_TYPE_CHOICES, null=True, blank=True)
     host = models.ForeignKey(Organization, blank=True, null=True)
     objects = EventQueryset.as_manager()
+
 
     def __unicode__(self):
         return self.title

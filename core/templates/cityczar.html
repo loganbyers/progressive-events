@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% load bootstrap3 %}
+{% load static %}
+
+{% block wrapped %}
+
+    <div class="row">
+
+        <div class="col-xs-8">
+
+            <h2>Progressive Events needs help to maintain locales</h2>
+
+            <p>Progressive Events is built by the community.
+	    	To be the resource we dream it could be, we need volunteers to take administrative roles for their local commmunity to ensure that events are added and maintained.
+		While we expect this site to be a simple resource to those <em>looking</em> for events in their area, we also know it is critical to make sure there are <em>things to look at</em>.
+		For this reason, Progressive Events is currently seeking geographically diverse members to serve as <b>City Czars</b> for their local community.
+	    	The idea is to have an on-the-ground resource within the city/municipality/region that is dedicated to ensuring the <em>population</em> of community events is listed, not just a select <em>sample</em>.
+	    	The role will also involve cleaning user-posted events and venues to ensure they are appropriately formatted and not duplicates, for instance.</p>
+
+
+            <p class="lead">&ldquo;Hey, I could do that!&rdquo;</p>
+
+            <p>That is exactly the attitude that is needed.
+	    	We are looking for people who feel a responsibility to keep their community informed and aware of the political events in their area.</p>
+
+            <p class="lead">&ldquo;How much time would this take?&rdquo;</p>
+
+            <p>It of course depends upon your area and the level of citizen involvement.
+	    	Major metropolitan areas will likely require more effort from the Czars than smaller municipalities.
+	    	Regardless, events are being planned, posted, and updated (hopefully) every week, so the time commitment will be variable.</p>
+
+
+            <p class="lead">&ldquo;What, explicitly, are the tasks?&rdquo;</p>
+
+	    <p>There are both tasks that are <em>required</em> and those that hopefully will be performed naturally as a side-effect of being part of the Progressive Events community.	
+	    	Obvious tasks include:
+		<ul>
+			<li>moderation of newly posted events</li>
+			<li>maintenance of critical local government events like city council meetings</li>
+			<li>removal of duplicate events</li>
+			<li>submission of events in your community</li>
+	    	</ul>	
+	    </p>
+
+            <p class="lead">&ldquo;Do I need coding skills to help?&rdquo;</p>
+
+	    <p>You don't need to code or program for this role.
+	    	There is a simple web-based control panel that will let you modify events.</p>
+
+	    <p class="lead">&ldquo;I don't want to be a <b>City Czar</b>, how else can I contribute?&rdquo;</p>
+
+	    <p>Anyone can still contribute through the normal homepage by submitting events.
+	   	Also be sure to <strong>engage</strong> in the events in your community and encourage others to engage as well.</p>	
+            <p class="lead">&ldquo;How do I apply?&rdquo;</p>
+
+	    <p>To apply, fill out an application and Progressive Events will get back to you.</p>	
+
+	    <h3>Application</h3>
+
+	    <form action="" method="post">
+		{% csrf_token %}
+
+		{% bootstrap_form_errors czarapplication_form %}
+		<div class="row">
+		    <div class="col-xs-6">
+			{% bootstrap_field czarapplication_form.name_first %}
+		    </div>
+		    <div class="col-xs-6">
+			{% bootstrap_field czarapplication_form.name_last %}
+		    </div>
+		</div>
+		<div class="row">
+		    <div class="col-xs-12">
+			{% bootstrap_field czarapplication_form.email %}
+		    </div>
+		</div>
+		<div class="row">
+		    <div class="col-xs-12">
+			{% bootstrap_field czarapplication_form.municipality %}
+		    </div>
+		</div>
+		<div class="row">
+		    <div class="col-xs-6">
+			{% bootstrap_field czarapplication_form.url %}
+		    </div>
+		    <div class="col-xs-6">
+			{% bootstrap_field czarapplication_form.twitter %}
+		    </div>
+		</div>
+		<div class="row">
+		    <div class="col-xs-12">
+			{% bootstrap_field czarapplication_form.description %}
+		    </div>
+		</div>
+
+		<button type="submit" class="btn btn-primary">Submit</button>
+
+	    </form>
+    </div>
+
+
+{% endblock %}

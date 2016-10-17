@@ -1,7 +1,7 @@
 from django.contrib.gis import admin
 from django.contrib.gis.geos import Point
 from django.conf import settings
-from .models import Venue, Event, Organization
+from .models import Venue, Event, Organization, CzarApplication
 import googlemaps
 
 
@@ -25,3 +25,8 @@ class EventAdmin(admin.OSMGeoAdmin):
     list_display = ['title', 'event_type']
     list_filter = ['event_type']
     save_as = True
+
+@admin.register(CzarApplication)
+class CzarApplicationAdmin(admin.OSMGeoAdmin):
+    list_display = ['name_first', 'name_last', 'municipality', 'application_reviewed']
+    list_filter = ['application_reviewed']

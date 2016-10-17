@@ -17,6 +17,9 @@ urlpatterns = [
     # experimental embed view
     url(r'^embed$', views.EmbedView.as_view(), name='embed'),
     url(r'^embed-demo$', views.EmbedDemoView.as_view(), name='embed-demo'),
+
+    # experimental city czar view
+    url(r'^czars$', views.CityCzarView.as_view(), name='cityczar'),
     
     url(r'^api/1/events', api.EventList.as_view()),
     url(r'^api/1/orgs', api.OrganizationList.as_view()),

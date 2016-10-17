@@ -7,7 +7,7 @@ from django.shortcuts import redirect, render
 from django.views.generic import DetailView, TemplateView
 
 from .api import EventFilterBackend
-from .forms import VenueForm, OrganizationForm, EventForm
+from .forms import VenueForm, OrganizationForm, EventForm, CzarApplicationForm
 from .models import Event, Organization, Venue
 
 
@@ -26,7 +26,7 @@ class MapView(TemplateView):
         search_form = event_filter_backend.prepare_search_form(request=self.request)
         point = event_filter_backend.get_point(search_form.data['address'])
         context['events'] = event_filter_backend.filter_queryset(request=self.request, queryset=Event.objects.all(), view=self, search_form=search_form, point=point)
-        
+
         context['now'] = datetime.now()
         context['future'] = datetime.now() + timedelta(days=int(search_form.data['days']))
         context['search_form'] = search_form
@@ -96,3 +96,26 @@ class AddView(TemplateView):
 
 class WhyView(TemplateView):
     template_name = 'why.html'
+
+
+class CityCzarView(TemplateView):
+    template_name = 'cityczar.html'
+
+    def post(self, *args, **kwargs):
+        czarapplication_form = CzarApplicationForm(self.request.POST or None, prefix='czarapplication')
+
+        if czarapplication_form.is_valid():
+            czarapp = czarapplication_form.save(commit=False)
+            czarapp.application_reviewed=False
+            czarapp.save()
+            messages.success(self.request, 'Your city czar submission is complete. You will be contacted soon.')
+
+        return redirect('/')
+
+    def get_context_data(self, **kwargs):
+        context = super(CityCzarView, self).get_context_data(**kwargs)
+
+        czarapplication_form = CzarApplicationForm(self.request.POST or None, prefix='czarapplication')
+        context['czarapplication_form'] = czarapplication_form
+
+        return context
